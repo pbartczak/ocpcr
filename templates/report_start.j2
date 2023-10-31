@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="stylesheet" type="text/css" href="./static/bootstrap.min.css" />
+  <style>
+    {% include "./static/bootstrap.min.css" %}
+  </style>
+  <title>OpenShift Cluster Report</title>
+</head>
+<body>
+  <div class="page-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-6 pt-5">
+          <h1 class="text-center">OpenShift Cluster Report</h1>
+          <div class="text-center py-4">
+            <img src="data:image/png;base64,{% include('./static/eskom_logo.base64') %}" alt="ESKOM logo" width="200px"/>
+          </div>
+          <p class="text-center fs-4">{{ raport_data }}</p>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
