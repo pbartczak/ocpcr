@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+
+  vars_files:
+    - ./variables/main.yaml
+    - ./variables/ocp_credentials.yaml
+
+  pre_tasks:
+    - name: Generate cluster raport template
+      ansible.builtin.template:
+        src: templates/{{ cr_start_template_filename }}
+        dest: ./{{ cr_filename }}
+      vars:
+        raport_data: "{{ '%Y-%m-%d' | strftime }}"
+
+
+  post_tasks:
+    - name: Finish cluster raport
+      ansible.builtin.blockinfile:
+        path: ./{{ cr_filename }}
+        block: "{{ lookup('template', cr_end_template_filename) }}"
+        marker: ""

@@ -1,0 +1,8 @@
+---
+# OCP
+ansible_kubectl_verify_ssl: false
+
+# Cluster Raport
+cr_filename: raport.html
+cr_start_template_filename: raport_start.j2
+cr_end_template_filename: raport_end.j2
