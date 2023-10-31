@@ -13,6 +13,8 @@
       vars:
         raport_data: "{{ '%Y-%m-%d' | strftime }}"
 
+  roles:
+    - cluster_info
 
   post_tasks:
     - name: Finish cluster raport
