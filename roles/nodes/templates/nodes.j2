@@ -1,0 +1,38 @@
+<div class="row justify-content-center pt-3">
+  <hr />
+  <h3>Nodes:</h3>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">NAME</th>
+        <th scope="col">STATUS</th>
+        <th scope="col">ROLES</th>
+        <th scope="col">AGE</th>
+        <th scope="col">VERSION</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for node in nodes %}
+      <tr>
+        <td>{{ node.name }}</td>
+        <td>{{ node.conditions[0] }}</td>
+        <td>
+          {{ 
+            node.labels.keys() |
+            map('regex_search', '^node-role.+') | 
+            select('match', '^node-role.+') |
+            map('split','/') |
+            flatten |
+            reject('regex', '^node-role.+') |
+            join(',')
+          }}
+        </td>
+        <td>{{ ((datatime | to_datetime("%Y-%m-%d")) - (node.time[:10] | to_datetime("%Y-%m-%d"))).days }}</td>
+        <td>{{ node.version }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+

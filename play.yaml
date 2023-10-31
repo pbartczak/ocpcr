@@ -15,6 +15,7 @@
 
   roles:
     - cluster_info
+    - nodes
 
   post_tasks:
     - name: Finish cluster raport
