@@ -20,16 +20,22 @@
         dest: ./{{ cr_filename }}
       vars:
         raport_data: "{{ '%Y-%m-%d' | strftime }}"
+      tags:
+        - always
 
     - name: Log in (obtain access token)
       kubernetes.core.k8s_auth:
         username: "{{ ocp_username }}"
         password: "{{ ocp_password }}"
       register: ocp_auth_results
+      tags:
+        - always
 
     - name: Set access tokent to OCP
       set_fact:
         ocp_api_token: "{{ ocp_auth_results.openshift_auth.api_key }}"
+      tags:
+        - always
 
   roles:
     - cluster_info
@@ -47,3 +53,5 @@
         state: absent
         api_key: "{{ ocp_api_token }}"
       when: ocp_api_token is defined
+      tags:
+        - always
