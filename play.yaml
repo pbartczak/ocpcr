@@ -5,6 +5,14 @@
     - ./variables/main.yaml
     - ./variables/ocp_credentials.yaml
 
+  module_defaults:
+    kubernetes.core.k8s_info:
+      host: "{{ ocp_host }}"
+      validate_certs: "{{ ocp_verify_ssl }}"
+    kubernetes.core.k8s_auth:
+      host: "{{ ocp_host }}"
+      validate_certs: "{{ ocp_verify_ssl }}"
+
   pre_tasks:
     - name: Generate cluster raport template
       ansible.builtin.template:
@@ -12,6 +20,16 @@
         dest: ./{{ cr_filename }}
       vars:
         raport_data: "{{ '%Y-%m-%d' | strftime }}"
+
+    - name: Log in (obtain access token)
+      kubernetes.core.k8s_auth:
+        username: "{{ ocp_username }}"
+        password: "{{ ocp_password }}"
+      register: ocp_auth_results
+
+    - name: Set access tokent to OCP
+      set_fact:
+        ocp_api_token: "{{ ocp_auth_results.openshift_auth.api_key }}"
 
   roles:
     - cluster_info
@@ -23,3 +41,9 @@
         path: ./{{ cr_filename }}
         block: "{{ lookup('template', cr_end_template_filename) }}"
         marker: ""
+
+    - name: If login succeeded, try to log out (revoke access token)
+      kubernetes.core.k8s_auth:
+        state: absent
+        api_key: "{{ ocp_api_token }}"
+      when: ocp_api_token is defined

@@ -1,6 +1,7 @@
 ---
 # OCP
-ansible_kubectl_verify_ssl: false
+ocp_host: https://api.infra.eskom.demo:6443
+ocp_verify_ssl: false
 
 # Cluster Raport
 cr_filename: report.html

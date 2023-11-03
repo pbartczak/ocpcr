@@ -2,6 +2,7 @@
 - name: Get cluster version information
   kubernetes.core.k8s_info:
     kind: ClusterVersion
+    api_key: "{{ ocp_api_token }}"
   register: cluster_version
 
 - name: Generate cluster information raport sections
