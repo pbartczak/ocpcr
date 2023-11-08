@@ -13,8 +13,8 @@
   vars:
     jmesquery: >-
       resources[*].{
-        name: metadata.name, 
-        time: metadata.creationTimestamp, 
+        name: metadata.name,
+        time: metadata.creationTimestamp,
         version: status.nodeInfo.kubeletVersion,
         conditions: status.conditions[?reason=='KubeletReady'].type,
         labels: metadata.labels

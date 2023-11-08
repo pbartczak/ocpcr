@@ -3,3 +3,6 @@ report.html
 
 # Ansible vault password
 vault-pass
+
+# Visual Studio Code
+.vscode/*
