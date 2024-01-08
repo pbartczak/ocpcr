@@ -1,4 +1,2 @@
 ---
-# OCP
-ocp_host: https://api.test.elab.local:6443
-ocp_verify_ssl: false
+ocpgr_result_dir_remove: false

@@ -1,4 +1,6 @@
 ---
+ocp_host: https://api.test.elab.local:6443
+ocp_verify_ssl: false
 ocp_username: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           39333165376561393938626233316335376165393662613230386336303766613565626132306337
