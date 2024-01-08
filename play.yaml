@@ -8,7 +8,7 @@
     - ./variables/ocp_credentials.yaml
 
   module_defaults:
-    kubernetes.core.k8s_info:
+    group/kubernetes.core.k8s:
       host: "{{ ocp_host }}"
       validate_certs: "{{ ocp_verify_ssl }}"
     kubernetes.core.k8s_auth:
