@@ -5,7 +5,7 @@
 
   vars_files:
     - ./variables/main.yaml
-    - ./variables/ocp_credentials.yaml
+    - ./variables/ocp.yaml
 
   module_defaults:
     group/kubernetes.core.k8s:
@@ -24,11 +24,18 @@
       tags:
         - always
 
-    - name: Set access tokent to OCP
+    - name: Set required variables
       ansible.builtin.set_fact:
         ocp_api_token: "{{ ocp_auth_results.openshift_auth.api_key }}"
+        ocprg_result_dir: "{{ ocp_host.split('.')[1] }}-result-{{ ansible_date_time.date }}"
       tags:
         - always
+
+    - name: Create result directory
+      ansible.builtin.file:
+        path: "{{ ocprg_result_dir }}"
+        state: directory
+        mode: "0755"
 
   roles:
     - cluster_info
@@ -40,5 +47,14 @@
         state: absent
         api_key: "{{ ocp_api_token }}"
       when: ocp_api_token is defined
+      ignore_errors: true
+      tags:
+        - always
+
+    - name: Create tar archive with results
+      ansible.builtin.archive:
+        path: "{{ ocprg_result_dir }}"
+        dest: "{{ ocprg_result_dir }}.tar.gz"
+        remove: "{{ ocpgr_result_dir_remove }}"
       tags:
         - always
