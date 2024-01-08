@@ -1,9 +1,4 @@
 ---
 # OCP
-ocp_host: https://api.infra.eskom.demo:6443
+ocp_host: https://api.test.elab.local:6443
 ocp_verify_ssl: false
-
-# Cluster Raport
-cr_filename: report.html
-cr_start_template_filename: report_start.j2
-cr_end_template_filename: report_end.j2

@@ -4,13 +4,3 @@
     kind: ClusterVersion
     api_key: "{{ ocp_api_token }}"
   register: cluster_version
-
-- name: Generate cluster information raport sections
-  ansible.builtin.blockinfile:
-    path: "{{ cr_filename }}"
-    block: "{{ lookup('template', 'cluster_info.j2') }}"
-    marker: ""
-  vars:
-    jmesquery: |
-      resources[0].{cluster_id: spec.clusterID, channel: spec.channel, version: status.desired.version}
-    cluster_info: "{{ cluster_version | community.general.json_query(jmesquery) }}"

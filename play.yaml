@@ -1,5 +1,5 @@
 ---
-- name: OpenShift Cluster Raport generator
+- name: OpenShift Cluster Raport Generator (fetch information)
   hosts: localhost
   become: false
 
@@ -16,16 +16,6 @@
       validate_certs: "{{ ocp_verify_ssl }}"
 
   pre_tasks:
-    - name: Generate cluster raport template
-      ansible.builtin.template:
-        src: templates/{{ cr_start_template_filename }}
-        dest: ./{{ cr_filename }}
-        mode: "0644"
-      vars:
-        raport_data: "{{ '%Y-%m-%d' | strftime }}"
-      tags:
-        - always
-
     - name: Log in (obtain access token)
       kubernetes.core.k8s_auth:
         username: "{{ ocp_username }}"
@@ -45,12 +35,6 @@
     - nodes
 
   post_tasks:
-    - name: Finish cluster raport
-      ansible.builtin.blockinfile:
-        path: ./{{ cr_filename }}
-        block: "{{ lookup('template', cr_end_template_filename) }}"
-        marker: ""
-
     - name: If login succeeded, try to log out (revoke access token)
       kubernetes.core.k8s_auth:
         state: absent
