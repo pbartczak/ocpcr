@@ -1,0 +1,20 @@
+---
+- name: Fetch a list of pods
+  kubernetes.core.k8s_info:
+    kind: Pod
+    api_key: "{{ ocp_api_token }}"
+  when: ocpgr_feature_pods
+  register: pod_list
+  tags:
+    - pods
+
+- name: Save pods information to file
+  ansible.builtin.copy:
+    content: "{{ pod_list.resources }}"
+    dest: "{{ ocprg_result_dir }}/{{ cluster_pods_file_name }}"
+    mode: "0644"
+  when:
+    - ocpgr_feature_pods
+    - pod_list.resources is defined
+  tags:
+    - pods

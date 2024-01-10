@@ -4,3 +4,4 @@ ocpgr_result_dir_remove: false
 # Features
 ocpgr_feature_cluster_version: true
 ocpgr_feature_nodes: true
+ocpgr_feature_pods: true
