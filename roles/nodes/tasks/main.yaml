@@ -10,7 +10,7 @@
 
 - name: Save nodes information to file
   ansible.builtin.copy:
-    content: "{{ nodes_info.resources[0] }}"
+    content: "{{ nodes_info.resources }}"
     dest: "{{ ocprg_result_dir }}/{{ cluster_nodes_file_name }}"
     mode: "0644"
   when:

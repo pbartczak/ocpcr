@@ -10,7 +10,7 @@
 
 - name: Save cluster version information to file
   ansible.builtin.copy:
-    content: "{{ cluster_version.resources[0] }}"
+    content: "{{ cluster_version.resources }}"
     dest: "{{ ocprg_result_dir }}/{{ cluster_info_result_file_name }}"
     mode: "0644"
   when:
