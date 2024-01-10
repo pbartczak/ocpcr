@@ -1,6 +1,9 @@
 # Generated raport
 report.html
 
+# Resault files
+*-result-*
+
 # Ansible vault password
 vault-pass
 
