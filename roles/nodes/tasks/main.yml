@@ -1,6 +1,0 @@
----
-- name: Fetch a list of nodes
-  kubernetes.core.k8s_info:
-    kind: Node
-    api_key: "{{ ocp_api_token }}"
-  register: nodes_info
