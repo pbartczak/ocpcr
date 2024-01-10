@@ -40,6 +40,7 @@
   roles:
     - cluster_info
     - nodes
+    - pods
 
   post_tasks:
     - name: If login succeeded, try to log out (revoke access token)
