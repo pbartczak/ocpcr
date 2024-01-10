@@ -1,0 +1,20 @@
+---
+- name: Get cluster version information
+  kubernetes.core.k8s_info:
+    kind: ClusterVersion
+    api_key: "{{ ocp_api_token }}"
+  when: ocpgr_feature_cluster_version
+  register: cluster_version
+  tags:
+    - cluster_info
+
+- name: Save cluster version information to file
+  ansible.builtin.copy:
+    content: "{{ cluster_version.resources[0] }}"
+    dest: "{{ ocprg_result_dir }}/{{ cluster_info_result_file_name }}"
+    mode: "0644"
+  when:
+    - ocpgr_feature_cluster_version
+    - cluster_version.resources is defined
+  tags:
+    - cluster_info
